@@ -22,19 +22,19 @@ defmodule FreelaReports do
     |> Enum.reduce(report_acc(), fn report, acc -> update_report(report, acc) end)
   end
 
-  def update_report(report, acc) do
+  defp update_report(report, acc) do
     Map.merge(report, acc, fn key, value1, value2 ->
       inner_update(key, value1, value2)
     end)
   end
 
-  def inner_update(key, value1, value2) when key == :all_hours do
+  defp inner_update(key, value1, value2) when key == :all_hours do
     Map.merge(value1, value2, fn _key, value1, value2 ->
       value1 + value2
     end)
   end
 
-  def inner_update(key, value1, value2) when key == :hours_per_month or key == :hours_per_year do
+  defp inner_update(key, value1, value2) when key == :hours_per_month or key == :hours_per_year do
     Map.merge(value1, value2, fn _key, value1, value2 ->
       Map.merge(value1, value2, fn _key, value1, value2 ->
         value1 + value2
@@ -42,7 +42,7 @@ defmodule FreelaReports do
     end)
   end
 
-  def report_acc() do
+  defp report_acc() do
     %{
       all_hours: %{},
       hours_per_month: %{},
@@ -50,7 +50,7 @@ defmodule FreelaReports do
     }
   end
 
-  def generate_initial_report([name, hours, _day, month, year]) do
+  defp generate_initial_report([name, hours, _day, month, year]) do
     hours = String.to_integer(hours)
 
     %{
