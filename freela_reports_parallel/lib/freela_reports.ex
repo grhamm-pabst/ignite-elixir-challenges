@@ -22,10 +22,17 @@ defmodule FreelaReports do
     |> Enum.reduce(report_acc(), fn report, acc -> update_report(report, acc) end)
   end
 
+  def build_from_many(file_names) when not is_list(file_names) do
+    {:error, "Please provide a list of file names"}
+  end
+
   def build_from_many(file_names) do
-    file_names
-    |> Task.async_stream(&build/1)
-    |> Enum.reduce(report_acc(), fn {:ok, result}, acc -> sum_reports(result, acc) end)
+    result =
+      file_names
+      |> Task.async_stream(&build/1)
+      |> Enum.reduce(report_acc(), fn {:ok, result}, acc -> sum_reports(result, acc) end)
+
+    {:ok, result}
   end
 
   defp sum_reports(result, acc) do
