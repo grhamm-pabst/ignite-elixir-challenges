@@ -239,4 +239,255 @@ defmodule FreelaReportsTest do
       assert response == expected_response
     end
   end
+
+  describe "build_from_many/1" do
+    test "when is given a list of file names return the report" do
+      file_names = ["part_1.csv", "part_2.csv"]
+
+      expected_response =
+        {:ok,
+         %{
+           all_hours: %{
+             "Cleiton" => 9093,
+             "Daniele" => 8710,
+             "Danilo" => 9305,
+             "Diego" => 8683,
+             "Giuliano" => 8859,
+             "Jakeliny" => 9237,
+             "Joseph" => 8739,
+             "Mayk" => 8892,
+             "Rafael" => 9043,
+             "Vinicius" => 9216
+           },
+           hours_per_month: %{
+             "Cleiton" => %{
+               "abril" => 740,
+               "agosto" => 777,
+               "dezembro" => 700,
+               "fevereiro" => 741,
+               "janeiro" => 866,
+               "julho" => 828,
+               "junho" => 769,
+               "maio" => 672,
+               "março" => 672,
+               "novembro" => 783,
+               "outubro" => 717,
+               "setembro" => 828
+             },
+             "Daniele" => %{
+               "abril" => 795,
+               "agosto" => 651,
+               "dezembro" => 595,
+               "fevereiro" => 666,
+               "janeiro" => 703,
+               "julho" => 820,
+               "junho" => 764,
+               "maio" => 822,
+               "março" => 765,
+               "novembro" => 692,
+               "outubro" => 659,
+               "setembro" => 778
+             },
+             "Danilo" => %{
+               "abril" => 821,
+               "agosto" => 855,
+               "dezembro" => 707,
+               "fevereiro" => 773,
+               "janeiro" => 801,
+               "julho" => 741,
+               "junho" => 650,
+               "maio" => 787,
+               "março" => 848,
+               "novembro" => 734,
+               "outubro" => 865,
+               "setembro" => 723
+             },
+             "Diego" => %{
+               "abril" => 751,
+               "agosto" => 730,
+               "dezembro" => 782,
+               "fevereiro" => 703,
+               "janeiro" => 693,
+               "julho" => 780,
+               "junho" => 679,
+               "maio" => 754,
+               "março" => 730,
+               "novembro" => 688,
+               "outubro" => 609,
+               "setembro" => 784
+             },
+             "Giuliano" => %{
+               "abril" => 793,
+               "agosto" => 709,
+               "dezembro" => 677,
+               "fevereiro" => 746,
+               "janeiro" => 715,
+               "julho" => 735,
+               "junho" => 775,
+               "maio" => 809,
+               "março" => 728,
+               "novembro" => 705,
+               "outubro" => 750,
+               "setembro" => 717
+             },
+             "Jakeliny" => %{
+               "abril" => 849,
+               "agosto" => 731,
+               "dezembro" => 755,
+               "fevereiro" => 770,
+               "janeiro" => 809,
+               "julho" => 825,
+               "junho" => 793,
+               "maio" => 681,
+               "março" => 814,
+               "novembro" => 648,
+               "outubro" => 766,
+               "setembro" => 796
+             },
+             "Joseph" => %{
+               "abril" => 676,
+               "agosto" => 806,
+               "dezembro" => 763,
+               "fevereiro" => 787,
+               "janeiro" => 769,
+               "julho" => 796,
+               "junho" => 751,
+               "maio" => 721,
+               "março" => 633,
+               "novembro" => 627,
+               "outubro" => 660,
+               "setembro" => 750
+             },
+             "Mayk" => %{
+               "abril" => 654,
+               "agosto" => 723,
+               "dezembro" => 814,
+               "fevereiro" => 763,
+               "janeiro" => 706,
+               "julho" => 796,
+               "junho" => 742,
+               "maio" => 763,
+               "março" => 706,
+               "novembro" => 811,
+               "outubro" => 678,
+               "setembro" => 736
+             },
+             "Rafael" => %{
+               "abril" => 738,
+               "agosto" => 786,
+               "dezembro" => 612,
+               "fevereiro" => 693,
+               "janeiro" => 762,
+               "julho" => 725,
+               "junho" => 813,
+               "maio" => 787,
+               "março" => 827,
+               "novembro" => 773,
+               "outubro" => 826,
+               "setembro" => 701
+             },
+             "Vinicius" => %{
+               "abril" => 780,
+               "agosto" => 712,
+               "dezembro" => 816,
+               "fevereiro" => 747,
+               "janeiro" => 765,
+               "julho" => 682,
+               "junho" => 775,
+               "maio" => 791,
+               "março" => 879,
+               "novembro" => 759,
+               "outubro" => 723,
+               "setembro" => 787
+             }
+           },
+           hours_per_year: %{
+             "Cleiton" => %{
+               "2016" => 1822,
+               "2017" => 1723,
+               "2018" => 1894,
+               "2019" => 1823,
+               "2020" => 1831
+             },
+             "Daniele" => %{
+               "2016" => 1765,
+               "2017" => 1875,
+               "2018" => 1777,
+               "2019" => 1627,
+               "2020" => 1666
+             },
+             "Danilo" => %{
+               "2016" => 1788,
+               "2017" => 1821,
+               "2018" => 2098,
+               "2019" => 1867,
+               "2020" => 1731
+             },
+             "Diego" => %{
+               "2016" => 1689,
+               "2017" => 1771,
+               "2018" => 1871,
+               "2019" => 1663,
+               "2020" => 1689
+             },
+             "Giuliano" => %{
+               "2016" => 1822,
+               "2017" => 1782,
+               "2018" => 1668,
+               "2019" => 1892,
+               "2020" => 1695
+             },
+             "Jakeliny" => %{
+               "2016" => 1911,
+               "2017" => 1744,
+               "2018" => 1802,
+               "2019" => 1817,
+               "2020" => 1963
+             },
+             "Joseph" => %{
+               "2016" => 1776,
+               "2017" => 1812,
+               "2018" => 1580,
+               "2019" => 1749,
+               "2020" => 1822
+             },
+             "Mayk" => %{
+               "2016" => 1770,
+               "2017" => 1716,
+               "2018" => 1857,
+               "2019" => 1872,
+               "2020" => 1677
+             },
+             "Rafael" => %{
+               "2016" => 1820,
+               "2017" => 1632,
+               "2018" => 1734,
+               "2019" => 1861,
+               "2020" => 1996
+             },
+             "Vinicius" => %{
+               "2016" => 1821,
+               "2017" => 1816,
+               "2018" => 1830,
+               "2019" => 1779,
+               "2020" => 1970
+             }
+           }
+         }}
+
+      response = FreelaReports.build_from_many(file_names)
+
+      assert response == expected_response
+    end
+
+    test "when is not given a list of file names return error" do
+      file_names = "banana"
+
+      expected_response = {:error, "Please provide a list of file names"}
+
+      response = FreelaReports.build_from_many(file_names)
+
+      assert response == expected_response
+    end
+  end
 end
